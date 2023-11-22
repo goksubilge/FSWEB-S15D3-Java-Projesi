@@ -1,6 +1,9 @@
 package com.wit.companyy.main;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.TreeMap;
+
 public class CountWords {
     public static void main(String[] args) {
         String text = "When the offensive resumed, the Turks received their first victory when the Greeks encountered stiff resistance in the battles of First and Second İnönü,"
@@ -30,7 +33,30 @@ public class CountWords {
      for(String word: words) {
             System.out.println("Word: " + word);
      }
-
+        System.out.println("*********************");
     // for(int i = 0; i < words.length; i++) {words[i] = words[i].toLowerCase();}
+        int count = 0;
+        Map<String,Integer> wordMapp = new TreeMap<>();
+        String Tword = "";
+        String Nword = "";
+
+        for(int i=0; i<words.length ;i++){
+            try{                            // try catch'e göre de sondaki tek kalan sayı varsa onu yazdırdım. (ama burda year kelimesiyle ilgili bir durum bununla da çözülmedi)
+                Tword = words[i];
+                count++;
+                Nword = words[i+1];
+                if(!Tword.equals(Nword)){
+                    wordMapp.put(Tword, count);
+                    count = 0;
+                }
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                if(!wordMapp.containsKey(words[words.length -1])){
+                    wordMapp.put(words[words.length -1], 1);
+                }
+            }
+        }
+        for(Map.Entry entry: wordMapp.entrySet()){
+            System.out.println("Key: " + entry.getKey() + " Value: " + entry.getValue());
+        }
     }
 }
